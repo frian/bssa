@@ -24,7 +24,7 @@ my @dirsToChmod = qw( var/cache var/logs );
 my $perms = '0777';
 
 # -- web
-
+my $webDir = 'web';
 
 # -- END
 
@@ -85,6 +85,8 @@ print "done\n";
 
 # -- try to launch compass ----------------------------------------------------
 print " trying to launch compass ... ";
+
+chdir $webDir or die " cannot cd to $webDir";
 
 if (system($compassInitCmd . $nullRedirect ) == 0) {
   print "done\n";
