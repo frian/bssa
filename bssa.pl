@@ -21,7 +21,7 @@ my $gitRepo = 'frian/silex-bootstrap-skel';
 my @dirsToChmod = qw( var/cache var/logs );
 
 # -- permissions
-my $perms = '0777';
+my $perms = 0777;
 
 # -- web
 my $webDir = 'web';
