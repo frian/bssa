@@ -20,6 +20,12 @@ my $gitRepo = 'frian/silex-bootstrap-skel';
 # -- set path to cache and log dirs
 my @dirsToChmod = qw( var/cache var/logs );
 
+# -- permissions
+my $perms = '0777';
+
+# -- web
+
+
 # -- END
 
 # -- help message
@@ -29,7 +35,8 @@ my $help = qq~
 ~;
 
 my $composerInstallCmd = 'curl -sS https://getcomposer.org/installer | php';
-my $skelDlCmd = 'git clone git://github.com/' . $gitRepo . '.git' ;
+my $skelDlCmd = 'git clone git://github.com/' . $gitRepo . '.git';
+my $compassInitCmd = 'compass init';
 my $nullRedirect = ' > /dev/null 2>&1';
 
 
@@ -37,7 +44,9 @@ my $nullRedirect = ' > /dev/null 2>&1';
 unless ( @ARGV ) { die $help }
 
 # die if folder not writable
-unless ( -d $ARGV[0] && -w _ ) { die "\n  $ARGV[0] not found or is not a folder or is not writable\n\n" }
+unless ( -d $ARGV[0] && -w _ ) { 
+  die "\n  $ARGV[0] not found or is not a folder or is not writable\n\n" 
+}
 
 # store folder name
 my $baseDir = $ARGV[0];
@@ -46,27 +55,44 @@ chdir $baseDir or die " cannot cd to $baseDir";
 
 print " creating new silex app in $baseDir\n";
 
+# -- download silex skel ------------------------------------------------------
 print " downloading silex skel from github ... ";
-system($skelDlCmd . ' ' . $baseDir . $nullRedirect) == 0 or die "  failed to clone from github (directory not empty ?)";
+system($skelDlCmd . ' ' . $baseDir . $nullRedirect) == 0 or 
+  die "  failed to clone from github (directory not empty ?)";
 print "done\n";
 
+# -- install composer ---------------------------------------------------------
 print " installing composer ... ";
-system($composerInstallCmd . $nullRedirect ) == 0 or die "  failed to install composer;";
+system($composerInstallCmd . $nullRedirect ) == 0 or 
+  die "  failed to install composer;";
 print "done\n";
 
+# -- install silex ------------------------------------------------------------
 print " installing silex ... ";
-system( './composer.phar install' . $nullRedirect ) == 0 or die "  failed to install silex;";
+system( './composer.phar install' . $nullRedirect ) == 0 or 
+  die "  failed to install silex;";
 print "done\n";
 
+# -- change permissions on special dirs ---------------------------------------
 print " changing permissions on ";
 print join( ', ' , @dirsToChmod );
 print " ... ";
 
 foreach ( @dirsToChmod ) {
-  chmod(0777, $_) or warn "Couldn't chmod $_ : $!";
+  chmod($perms, $_) or warn "Couldn't chmod $_ : $!";
+}
+print "done\n";
+
+# -- try to launch compass ----------------------------------------------------
+print " trying to launch compass ... ";
+
+if (system($compassInitCmd . $nullRedirect ) == 0) {
+  print "done\n";
+}
+else {
+  print " failed to initilize compass\n";
 }
 
-print "done\n";
 
 print " silex app ready \\o/ \n";
 
