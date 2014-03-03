@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# 05/02/2014
+# 03/03/2014
 #
 # bssa.pl - bootstrap a silex ( and soon a symfony app ) in seconds
 # (c) André Friedli <a@frian.org>
@@ -73,7 +73,7 @@ print "done\n";
 
 # -- install silex ------------------------------------------------------------
 print " installing silex ... ";
-system( './composer.phar install' . $nullRedirect ) == 0 or 
+system( 'php composer.phar install' . $nullRedirect ) == 0 or 
   die "  failed to install silex;";
 print "done\n";
 
