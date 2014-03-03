@@ -39,6 +39,10 @@ my $skelDlCmd = 'git clone git://github.com/' . $gitRepo . '.git';
 my $compassInitCmd = 'compass init';
 my $nullRedirect = ' > /dev/null 2>&1';
 
+# os detection
+if ( $^O eq 'MSWin32' ) {
+  $nullRedirect = ' >nul 2>nul';
+}
 
 # die if no paramter
 unless ( @ARGV ) { die $help }
@@ -57,7 +61,7 @@ print " creating new silex app in $baseDir\n";
 
 # -- download silex skel ------------------------------------------------------
 print " downloading silex skel from github ... ";
-system($skelDlCmd . ' ' . $baseDir . $nullRedirect) == 0 or 
+system($skelDlCmd . ' ' . '.' . $nullRedirect) == 0 or 
   die "  failed to clone from github (directory not empty ?)";
 print "done\n";
 
