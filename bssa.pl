@@ -34,7 +34,7 @@ my $gitDir = '.git';
 
 # -- help message
 my $help = qq~
-  usage : $0 folder
+  usage : $0 [-r github_repo] folder
 
 ~;
 

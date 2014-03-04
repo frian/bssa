@@ -8,6 +8,10 @@ bootstrap a silex ( and soon a symfony ) app in seconds.
 * install composer
 * install silex
 * initialize compass *
+* deletes the skel's .git directory
+* init a new git repo
+* add files to the repo
+* create an initial commit
 
 ##what it does not
 
@@ -32,7 +36,7 @@ at the top pf the script
 
 #usage
 
-    ./bssa.pl folder
+    ./bssa.pl [ -r github_repo ] folder
 
 folder must be an empty existing folder (htdocs or your docs base directory)
 
