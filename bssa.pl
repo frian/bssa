@@ -8,9 +8,13 @@
 # For the full copyright and license information, please view the LICENSE
 # file that was distributed with this source code.
 
+# -- version -VERSION-
+# -- released -DATE-
+
 use strict;
 use warnings;
 
+use Cwd;
 use Getopt::Std;
 use File::Path;
 
@@ -71,7 +75,7 @@ if ( $^O eq 'MSWin32' ) {
 }
 
 # store folder name
-my $baseDir = $ARGV[0];
+my $baseDir = getcwd() . '/' . $ARGV[0];
 
 chdir $baseDir or die " cannot cd to $baseDir";
 
